@@ -3,14 +3,16 @@ from typing import Optional
 from fastapi import FastAPI, Form
 from fastapi.staticfiles import StaticFiles
 
-from cowin_api import CoWinAPI
+# from cowin_api import CoWinAPI
 from dateutil import parser
+
+from app.utils import *
 
 
 app = FastAPI()
 app.mount("/ui", StaticFiles(directory="ui"), name="ui")
 
-cowin = CoWinAPI()
+# cowin = CoWinAPI()
 
 # @app.get("/")
 # def read_root():
@@ -26,8 +28,9 @@ cowin = CoWinAPI()
 def postLogin(date: str = Form(...), pincode: str = Form(...)):
     dateCorrectFormat = parser.parse(date).strftime('%d-%m-%Y')
     try: 
-        availableCenters = cowin.get_availability_by_pincode(pincode, dateCorrectFormat)
+        availableCenters = getavailabilitybypincode(pincode, dateCorrectFormat)
     except Exception as err:
-        print(err)
-        return {"Error":str(err)}
+        # print(err)
+        # return err
+        return str(err)
     return availableCenters
