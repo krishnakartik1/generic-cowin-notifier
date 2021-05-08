@@ -25,5 +25,9 @@ cowin = CoWinAPI()
 @app.post("/login")
 def postLogin(date: str = Form(...), pincode: str = Form(...)):
     dateCorrectFormat = parser.parse(date).strftime('%d-%m-%Y')
-    availableCenters = cowin.get_availability_by_pincode(pincode, dateCorrectFormat)
+    try: 
+        availableCenters = cowin.get_availability_by_pincode(pincode, dateCorrectFormat)
+    except Exception as err:
+        print(err)
+        return {"Error":str(err)}
     return availableCenters
