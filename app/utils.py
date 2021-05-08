@@ -14,7 +14,7 @@ def today() -> str:
 def _callApi(url: str) -> Union[HTTPError, dict]:
     user_agent = UserAgent()
     headers = {
-        'User-Agent': user_agent.random,
+        # 'User-Agent': user_agent.random,
         'accept': 'application/json',
         'Accept-Language': 'hi_IN'
     }
